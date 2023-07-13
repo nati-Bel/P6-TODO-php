@@ -23,16 +23,9 @@ class DatabaseConnection{
 
         $set_names= $this-> connection ->prepare("SET NAMES 'utf8'");
         $set_names-> execute();
-    
     }
-
-
-    public function executeQuery($query, $parameters=[]){
-        $statement= $this-> connection-> prepare($query);
-        $results= $statement-> execute($parameters);
-
-        return $results;
+    public function get_connection() {
+        return $this-> connection;
     }
-   
 }
 ?>
