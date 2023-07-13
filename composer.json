@@ -1,0 +1,11 @@
+{
+    "name": "user/p6-todo-list-php",
+    "autoload": {
+        "psr-4": {
+            "Database\\":"database",
+            "App\\":"app"
+            
+        }
+    },
+    "require": {}
+}
