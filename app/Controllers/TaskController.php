@@ -8,8 +8,8 @@ private function executeQuery($query, $parameters=[]){$server= "127.0.0.1";
     $username= "root";
     $password = "";
     $database= "p6_todo_list";
+    
     $db= new DatabaseConnection($server, $username, $password, $database);
-
     $db-> connect();
     $statement= $db-> get_connection()-> prepare($query);
     $statement-> execute($parameters);
@@ -25,11 +25,7 @@ public function create($data){
     $statement= $this-> executeQuery($query, [$data["name"],
                                         $data["description"]
                                 ]);
-    //print_r($results);
-
-    if (empty($statement)){
-        echo "Ooops something went wrong :/";
-    };
+    
 }
 
 public function get_tasks(){
@@ -37,10 +33,32 @@ public function get_tasks(){
     $query= "SELECT * FROM tasks";
 
     $results= $this-> executeQuery($query)-> fetchAll(\PDO::FETCH_ASSOC);
-    if (empty($results)){
-        echo "Ooops something went wrong :/";
-    };
+    
     return $results;
+}
+
+public function delete_task($id) {
+
+    $query = "DELETE FROM tasks WHERE id = '$id'";
+    $statement= $this-> executeQuery($query);
+    
+}
+
+public function get_one_task($id){
+    
+    $query= "SELECT * FROM tasks WHERE id = '$id'";
+
+    $results= $this-> executeQuery($query)-> fetch(\PDO::FETCH_ASSOC);
+    
+    return $results;
+}
+
+public function edit_task($data, $id) {
+    $query= "UPDATE tasks SET name=?, description=? WHERE id=?";
+    $statement= $this-> executeQuery($query, [$data["name"],
+                                        $data["description"],
+                                        $id
+                                ]);
 }
 
 }

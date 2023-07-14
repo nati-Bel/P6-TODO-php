@@ -1,8 +1,8 @@
-<html>
 <?php
 use App\Controllers\TaskController;
 require "../vendor/autoload.php";
 ?>
+<html>
 <head>
     <title>TODO_list</title>
 </head>
@@ -10,7 +10,7 @@ require "../vendor/autoload.php";
     <fieldset>
         <h3>What do you have to do?</h3>
         <br>
-        <form action="./todo.php" method="post">
+        <form action="./create_task.php" method="post">
             
             Task name: <input type="text" name="name" id="task_name" required>
             <br><br>
@@ -28,39 +28,21 @@ require "../vendor/autoload.php";
             $task_list = $task_controller-> get_tasks();
             
             echo "<table>";
-            echo "<tr><th>Task</th><th>Description</th><th>Start Date</th><th>Deadline</th>";
             foreach ($task_list as $row) {
             echo "<tr>";
             echo "<td>" . $row["name"] . "</td>";
             echo "<td>" . $row["description"] . "</td>";
-            echo "<td>" . $row["start_date"] . "</td>";
-            echo "<td>" . $row["expiry_date"] . "</td>";
-            echo "<td>" . $row["completed"] . "</td>";
-            echo '<td><button onclick="handleButtonClick(' . $row["id"] . ')">Edit</button></td>';
+            echo "<td><a href='delete_task.php?id=" .$row["id"] . "' method='GET'><button>Delete</button></td>";
+            echo "<td><a href='edit_task.php?id=" .$row["id"] . "' method='GET'><button>Edit</button></td>";
             
-            
-
             echo "</tr>";
             }
             echo "</table>";
         
         ?> 
         
-
     </div>
+</html>
 
-<html>
 
-<?php
 
-// print_r($_POST);
-// print_r($_SERVER);
-if (isset($_POST["submit"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
-  $new_task = new TaskController;     
-  $new_task-> create([
-                "name"=>$_POST["name"],
-                "description"=>$_POST["description"]
-                ]);
-}
-
-?>
