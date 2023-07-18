@@ -1,6 +1,8 @@
 <?php 
 namespace Database\PDO;
 
+use PDOException;
+
 class DatabaseConnection{
     
     private $server;
@@ -19,13 +21,21 @@ class DatabaseConnection{
     }
 
     public function connect(){
-        $this-> connection = new \PDO("mysql:host=$this->server; dbname=$this->database", $this->username, $this-> password);
+        try{
+            $this-> connection = new \PDO("mysql:host=$this->server; dbname=$this->database", $this->username, $this-> password);
+            $this -> connection -> setAttribute(\PDO::ATTR_ERRMODE,
+                                                \PDO:: ERRMODE_EXCEPTION);
+            $this -> connection ->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
 
-        $set_names= $this-> connection ->prepare("SET NAMES 'utf8'");
-        $set_names-> execute();
+            $set_names= $this-> connection ->prepare("SET NAMES 'utf8'");
+            $set_names-> execute();
+        }catch(PDOException $e){
+            echo "Problemas con la conexion" .$e -> getMessage();
+        }
     }
     public function get_connection() {
         return $this-> connection;
     }
 }
+
 ?>

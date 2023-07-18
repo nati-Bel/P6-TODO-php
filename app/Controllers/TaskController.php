@@ -4,7 +4,8 @@ use Database\PDO\DatabaseConnection;
 
 class TaskController{
 
-private function executeQuery($query, $parameters=[]){$server= "127.0.0.1";
+private function executeQuery($query, $parameters=[]){
+    $server= "127.0.0.1";
     $username= "root";
     $password = "";
     $database= "p6_todo_list";

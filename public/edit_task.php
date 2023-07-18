@@ -5,7 +5,6 @@ require "../vendor/autoload.php";
 $edit_controller = new TaskController;
 if(isset($_GET['id'] )){
     $id = $_GET['id'];
-    echo $id;
     $selected_task = $edit_controller -> get_one_task($id);
 }
 
@@ -24,6 +23,11 @@ if(isset($_POST["submit"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
 <html>
     <head>
         <title>Edit task</title>
+        <style>
+            * {font-family:'Courier New', Courier, monospace;}
+            fieldset {width:50%; margin:20px;}
+            .h3 {padding:20px;}
+         </style>
     </head>
     <body>
         <fieldset>
